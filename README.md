@@ -1,24 +1,32 @@
-## 📌 User Management API
+📌 User Management API
 
-A RESTful API for user management built with Node.js, Express, Prisma, featuring JWT Authentication, Role-based Authorization, Pagination, Search, and Swagger Documentation.
+A RESTful User Management API built with Node.js, Express, and Prisma, implementing common real-world backend patterns such as JWT Authentication, Role-based Authorization, Pagination, Search, and Swagger API Documentation.
+
+This project is designed as a backend practice project for Intern/Fresher level, focusing on clean structure, correctness, and practical usage.
 
 🚀 Features
 
 User Registration & Login
 
-JWT Authentication (Access Token + Refresh Token)
+JWT Authentication
+
+  Access Token
+
+  Refresh Token
 
 Role-based Authorization (USER / ADMIN)
 
-Admin: Get list of users
+Admin APIs:
 
-Pagination
+  Get user list with pagination
 
-Search by email
+  Search users by email
 
-User: Update profile
+User APIs:
 
-Swagger API Documentation
+  Update personal profile
+
+Swagger (OpenAPI 3.0) API Documentation
 
 🛠️ Tech Stack
 
@@ -32,9 +40,10 @@ PostgreSQL
 
 JWT (jsonwebtoken)
 
-Swagger (OpenAPI 3.0)
+Swagger (swagger-ui-express, swagger-jsdoc)
 
 📂 Project Structure
+
 user-management/
 ├── prisma/
 │   ├── schema.prisma
@@ -49,11 +58,11 @@ user-management/
 │   │   ├── admin.route.js
 │   │   └── user.route.js
 │   ├── middlewares/
-│   │   ├── auth.js
-│   │   └── role.js
-│   ├── swagger.js
-│   ├── prisma.js
-│   └── index.js
+│   │   ├── auth.js        # JWT authentication
+│   │   └── role.js        # Role-based authorization
+│   ├── swagger.js        # Swagger configuration
+│   ├── prisma.js         # Prisma client
+│   └── index.js          # App entry point
 ├── .env
 ├── .gitignore
 ├── package.json
@@ -68,18 +77,22 @@ JWT_SECRET=access_secret_123
 JWT_REFRESH_SECRET=refresh_secret_456
 
 🔧 Installation & Run
+
 1️⃣ Install dependencies
+
 npm install
 
 2️⃣ Generate Prisma Client
+
 npx prisma generate
 
 3️⃣ Run database migration
+
 npx prisma migrate dev
 
 4️⃣ Start development server
-npm run dev
 
+npm run dev
 
 Server will run at:
 
@@ -87,51 +100,72 @@ http://localhost:3000
 
 🔐 Authentication Flow
 
-User logs in → receives:
+User logs in successfully
 
-Access Token (15 minutes)
+Server returns:
 
-Refresh Token (7 days)
+  Access Token (15 minutes)
 
-Access Token used for protected APIs
+  Refresh Token (7 days)
 
-When expired → call Refresh Token API to get a new Access Token
+Access Token is used to call protected APIs
+
+When Access Token expires:
+
+  Client calls Refresh Token API
+
+  Server issues a new Access Token
 
 📖 API Documentation (Swagger)
 
-After running the server, open:
+After starting the server, open:
 
 http://localhost:3000/api-docs
 
 
-You can:
+Swagger UI allows you to:
 
-Test APIs directly
+  View all API endpoints
 
-View request/response schema
+  Inspect request/response schemas
 
-Authorize using Bearer Token
+  Test APIs directly
+
+  Authorize using Bearer Token
 
 📌 API Endpoints Overview
+
 🔑 Auth
-Method	Endpoint	Description
-POST	/auth/register	Register new user
-POST	/auth/login	Login
-POST	/auth/refresh-token	Refresh access token
+
+| Method | Endpoint              | Description          |
+| ------ | --------------------- | -------------------- |
+| POST   | `/auth/register`      | Register a new user  |
+| POST   | `/auth/login`         | Login                |
+| POST   | `/auth/refresh-token` | Refresh access token |
+
 👤 User
-Method	Endpoint	Description
-PUT	/users/profile	Update user profile
+
+| Method | Endpoint         | Description         |
+| ------ | ---------------- | ------------------- |
+| PUT    | `/users/profile` | Update user profile |
+
+Requires authentication (USER or ADMIN)
+
 👑 Admin
-Method	Endpoint	Description
-GET	/admin/users	Get all users (ADMIN only)
 
-Query parameters for /admin/users:
+| Method | Endpoint       | Description   |
+| ------ | -------------- | ------------- |
+| GET    | `/admin/users` | Get all users |
 
-page
+Requires ADMIN role
 
-limit
+Query Parameters
 
-search
+| Name   | Description                |
+| ------ | -------------------------- |
+| page   | Page number                |
+| limit  | Number of records per page |
+| search | Search by email            |
 
 Example:
 
@@ -139,21 +173,27 @@ Example:
 
 🔒 Authorization
 
-USER: Access personal APIs
+USER
 
-ADMIN: Access admin APIs
+  Access personal APIs
 
-Authorization implemented using middleware:
+ADMIN
 
-auth.js
+  Access admin APIs
 
-role.js
+Authorization is implemented using middleware:
+
+  auth.js – JWT authentication
+
+  role.js – Role checking
 
 🧪 Testing
 
-Use Postman or Thunder Client
+Swagger UI
 
-Swagger UI available for quick testing
+Postman
+
+Thunder Client
 
 📌 Future Improvements
 
@@ -161,11 +201,13 @@ Refresh Token rotation
 
 Logout API
 
+Input validation (Zod / Joi)
+
 Soft delete users
 
 Docker support
 
-Unit testing
+Unit & integration testing
 
 👤 Author
 
@@ -173,16 +215,17 @@ Hoàng Trọng Vững
 Backend Developer Intern
 📍 Ho Chi Minh City, Vietnam
 
-GitHub: https://github.com/HoangTrongVung
+GitHub:
+👉 https://github.com/HoangTrongVung
 
 ⭐ Notes for Recruiters
 
 This project demonstrates:
 
-RESTful API design
+  RESTful API design principles
 
-Authentication & Authorization
+  JWT authentication and role-based authorization
 
-Clean project structure
+  Clean and maintainable project structure
 
-Real-world backend features
+  Practical backend features commonly used in real-world applications
